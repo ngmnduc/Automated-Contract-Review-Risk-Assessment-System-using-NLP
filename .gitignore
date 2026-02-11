@@ -10,4 +10,5 @@ models/saved_weights/*
 
 # IDE settings
 .vscode/
-.idea/
+.idea/.DS_Store
+data/
