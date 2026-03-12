@@ -97,7 +97,6 @@ def highlight_risky_keywords(text, risk_level):
         highlighted_text = pattern.sub(f'<mark style="{mark_style}">\\1</mark>', highlighted_text)
         
     return highlighted_text
-# ------------------------
 
 st.markdown('<div class="app-title">⚖️ Automated Contract Review & Risk Assessment</div>', unsafe_allow_html=True)
 st.markdown('<div class="app-subtitle">Automated risk assessment utilizing fine-tuned Legal-BERT model</div>', unsafe_allow_html=True)
