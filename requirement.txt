@@ -6,3 +6,6 @@ streamlit
 pandas
 scikit-learn
 python-multipart
+plotly
+PyPDF2
+python-docx
