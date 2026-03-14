@@ -72,29 +72,38 @@ def extract_text_from_file(uploaded_file):
     return ""
 
 def highlight_risky_keywords(text, risk_level):
-    #Hàm highlight bôi màu từ khóa nguy hiểm dựa trên mức độ rủi ro
+    #Hàm highlight bôi màu từ khóa nguy hiểm 
     if risk_level == "LOW":
-        return text # An toàn thì không bôi màu gì cả
+        return text 
         
-    # Danh sách các từ khóa thường mang tính ép buộc, rủi ro cao trong hợp đồng
-    risky_keywords = [
-        r"immediately", r"without any prior written notice", r"without prior written notice",
-        r"sole discretion", r"without consent", r"assign", r"transfer", r"indemnify",
-        r"hold harmless", r"defend", r"breach", r"penalty", r"liability", r"damages"
+    # Danh sách từ khóa từ risk_logic.py
+    high_keywords = [
+        "immediate termination", "without cause", "at will", "without notice",
+        "unlimited duration", "perpetual", "no exceptions", "all information",
+        "unlimited liability", "all damages", "gross negligence", "sole discretion",
+        "non-assignable", "without consent"
+    ]
+    
+    medium_keywords = [
+        "30 days notice", "notice period", "breach", "default",
+        "5 years", "proprietary information", "trade secrets",
+        "reasonable costs", "third party claims", "defend and hold harmless",
+        "prior written consent", "affiliate", "successor"
     ]
     
     highlighted_text = text
-    for kw in risky_keywords:
-        # Dùng Regex để tìm chính xác cụm từ, không phân biệt hoa thường
+    
+    # Tô màu Đỏ cho các từ khóa High Risk
+    for kw in high_keywords:
         pattern = re.compile(r'\b(' + kw + r')\b', re.IGNORECASE)
-        
-        # Đỏ cho HIGH, Vàng cho MEDIUM
-        if risk_level == "HIGH":
-            mark_style = 'background-color: #fecaca; color: #991b1b; padding: 2px 4px; border-radius: 4px; font-weight: 600;'
-        else:
-            mark_style = 'background-color: #fde68a; color: #92400e; padding: 2px 4px; border-radius: 4px; font-weight: 600;'
-            
-        highlighted_text = pattern.sub(f'<mark style="{mark_style}">\\1</mark>', highlighted_text)
+        mark_style_high = 'background-color: #fecaca; color: #991b1b; padding: 2px 4px; border-radius: 4px; font-weight: 600;'
+        highlighted_text = pattern.sub(f'<mark style="{mark_style_high}">\\1</mark>', highlighted_text)
+
+    # Tô màu Vàng cho các từ khóa Medium Risk
+    for kw in medium_keywords:
+        pattern = re.compile(r'\b(' + kw + r')\b', re.IGNORECASE)
+        mark_style_medium = 'background-color: #fde68a; color: #92400e; padding: 2px 4px; border-radius: 4px; font-weight: 600;'
+        highlighted_text = pattern.sub(f'<mark style="{mark_style_medium}">\\1</mark>', highlighted_text)
         
     return highlighted_text
 
